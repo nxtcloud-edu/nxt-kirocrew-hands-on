@@ -1,0 +1,22 @@
+{
+  "course": "EDU-202 AI 에이전트 실습",
+  "surveyed_at": "2026-08-08",
+  "satisfaction": {
+    "overall_avg": 4.6,
+    "content_avg": 4.7,
+    "instructor_avg": 4.8
+  },
+  "completion": {
+    "enrolled": 29,
+    "completed": 21,
+    "completion_rate": 0.72
+  },
+  "advance_demand": {
+    "respondents": 24,
+    "would_enroll": 18
+  },
+  "notes": [
+    "수료율 산정에 마지막 주 결석자 3명의 이의신청이 접수되어 있다",
+    "사전 수요조사는 재학생만 대상으로 진행했다"
+  ]
+}
