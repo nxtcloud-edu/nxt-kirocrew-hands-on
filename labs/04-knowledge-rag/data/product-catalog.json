@@ -1,0 +1,21 @@
+{
+  "catalog_version": "training-2026-08",
+  "products": [
+    {
+      "code": "NXT-RAG-ALPHA",
+      "name": "NXT Travel Mug",
+      "category": "drinkware",
+      "return_class": "standard",
+      "personalized": false,
+      "included_parts": ["mug", "lid", "care-card"]
+    },
+    {
+      "code": "NXT-RAG-BETA",
+      "name": "NXT Engraved Bottle",
+      "category": "drinkware",
+      "return_class": "personalized",
+      "personalized": true,
+      "included_parts": ["bottle", "cap", "care-card"]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "release": "training-search-2.0",
+  "executed_at": "2026-08-04T14:00:00Z",
+  "summary": {
+    "total": 120,
+    "passed": 116,
+    "failed": 2,
+    "skipped": 2
+  },
+  "issues": [
+    {
+      "id": "QA-17",
+      "severity": "blocker",
+      "status": "open",
+      "title": "Favorite migration duplicates entries when retried"
+    },
+    {
+      "id": "QA-21",
+      "severity": "medium",
+      "status": "open",
+      "title": "Search empty-state copy is inconsistent"
+    }
+  ],
+  "notes": [
+    "Rollback procedure was not included in this QA run",
+    "The logging configuration change happened after this run"
+  ]
+}
