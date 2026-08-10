@@ -81,6 +81,12 @@ kirocrew gateway
 
 브라우저에서 `http://localhost:5476`을 엽니다.
 
+### 처음 접속 시 — Import Setup 안내
+
+첫 접속에서 `Import Setup` 화면(Bring your crew with you)이 뜰 수 있습니다. 이 컴퓨터에서 다른 AI 도구(Codex, Claude Code 등)를 쓰고 있었다면 그 설정을 가져올지 묻는 것입니다.
+
+**이 과정에서는 `Skip all`을 누릅니다.** 개인 설정을 가져오면 실습 화면이 안내와 달라질 수 있습니다. 화면이 뜨지 않으면 그대로 진행합니다.
+
 ## 5. 준비 완료 확인
 
 ```text
