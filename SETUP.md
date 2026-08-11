@@ -2,53 +2,85 @@
 
 이 폴더를 Kiro IDE로 연 직후, 실습을 시작할 수 있는 상태(대시보드 접속)까지 준비하는 문서입니다. Kiro IDE 설치와 로그인은 별도 안내를 따릅니다.
 
-## 1. 에이전트에게 설치를 맡기기
+## 0. 사전 요구 점검과 설치 — 에이전트가 수행할 수 있는 절차
 
-Kiro IDE 채팅에 아래를 붙여넣습니다.
+이 절은 에이전트가 읽고 그대로 수행할 수 있도록 쓰여 있습니다. Kiro IDE 채팅에 "이 폴더의 SETUP.md에서 0번 절차를 수행해 줘"라고 맡기면 됩니다.
 
-```text
-이 폴더의 SETUP.md 를 읽고 "2. Kiro Crew 설치" 절차를 진행해 줘.
-kirocrew setup 은 실행하지 마 — 그건 내가 직접 할 거야.
-설치가 끝나면 새 셸 기준으로 kirocrew --version 결과를 보여 줘.
-```
+**에이전트가 지켜야 할 경계:**
 
-에이전트가 명령 실행 전에 승인을 요청하면 내용을 확인하고 승인합니다. 에이전트 진행이 매끄럽지 않으면 아래 절차를 직접 실행해도 됩니다.
+- 점검과 설치, 버전 확인까지만 수행한다. **로그인(`kiro-cli login`)과 초기 설정(`kirocrew setup`)은 실행하지 않는다** — 브라우저 인증과 대화형 질문은 사람이 직접 한다.
+- 이미 설치된 도구는 재설치하지 않고 버전만 보고한다.
+- 설치 직후 같은 셸에서 명령이 인식되지 않으면 아래 "PATH 갱신"을 수행한 뒤 다시 확인한다.
+- 모든 항목이 끝나면 아래 "완료 보고 형식"으로 보고한다.
 
-## 1.5. kiro-cli가 없다면 먼저 설치
+### 점검 대상 (순서대로)
 
-`kiro-cli whoami`가 `command not found`로 실패하면 kiro-cli부터 설치합니다.
+**Git**
 
-### macOS
+- 확인: `git --version`
+- 없으면 — macOS: `brew install git` (brew가 없으면 아래 Homebrew 먼저) · Windows: `winget install --id Git.Git -e`
 
-```bash
-curl -fsSL https://cli.kiro.dev/install | bash
-```
+**Homebrew (macOS만)**
 
-### Windows PowerShell
+- 확인: `brew --version`
+- 없으면: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+- 설치가 관리자 암호를 요구해 진행할 수 없으면 중단하고, 사람에게 직접 설치를 안내한다.
 
-```powershell
-irm 'https://cli.kiro.dev/install.ps1' | iex
-```
+**Python 3.12**
 
-### 설치 직후 같은 셸에서 바로 확인하기 (PATH)
+- 확인: `python3 --version` (macOS) · `py -3.12 --version` (Windows) — 3.12 이어야 한다
+- 없으면 — macOS: `brew install python@3.12` · Windows: `winget install --id Python.Python.3.12 -e`
+- Windows는 Microsoft Store alias가 아니라 실제 CPython이어야 한다.
 
-설치 직후에는 현재 셸의 PATH에 새 명령이 아직 없을 수 있습니다. 새 터미널을 열지 않고 이어서 확인하려면 PATH를 먼저 갱신합니다.
+**uv**
+
+- 확인: `uvx --version`
+- 없으면 — macOS: `brew install uv` · Windows: `winget install --id astral-sh.uv -e`
+
+**kiro-cli**
+
+- 확인: `kiro-cli --version`
+- 없으면 — macOS: `curl -fsSL https://cli.kiro.dev/install | bash` · Windows: `irm 'https://cli.kiro.dev/install.ps1' | iex`
+- 설치까지만. 로그인 상태(`kiro-cli whoami`)는 확인해서 보고만 하고, 로그인되어 있지 않으면 "사람이 `kiro-cli login`을 직접 실행해야 함"이라고 보고한다.
+
+### PATH 갱신 — 설치 직후 같은 셸에서 바로 확인하기
+
+설치 직후에는 현재 셸의 PATH에 새 명령이 아직 없을 수 있다. 새 터미널을 열지 않고 이어서 확인하려면:
 
 macOS:
 
 ```bash
 export PATH="$HOME/.local/bin:$PATH"
-kiro-cli --version
 ```
 
 Windows PowerShell:
 
 ```powershell
 $env:Path = [Environment]::GetEnvironmentVariable('Path','User') + ';' + [Environment]::GetEnvironmentVariable('Path','Machine')
-kiro-cli --version
 ```
 
-버전이 출력되면 설치 완료입니다. 이후 새 터미널에서 `kiro-cli login`으로 로그인하고 `kiro-cli whoami`로 계정을 확인합니다. 로그인은 브라우저 인증이 필요하므로 사람이 직접 합니다.
+### 완료 보고 형식
+
+```text
+git: 2.x.x
+brew: 4.x.x (macOS)
+python3: 3.12.x
+uvx: 0.x.x
+kiro-cli: x.x.x / 로그인: <계정> 또는 "로그인 필요 — 사람이 kiro-cli login 실행"
+```
+
+## 1. 에이전트에게 설치를 맡기기
+
+Kiro IDE 채팅에 아래를 붙여넣습니다.
+
+```text
+이 폴더의 SETUP.md 를 읽고 "0. 사전 요구 점검과 설치"와
+"2. Kiro Crew 설치"를 순서대로 진행해 줘.
+kiro-cli login 과 kirocrew setup 은 실행하지 마 — 그건 내가 직접 할 거야.
+끝나면 0번의 완료 보고 형식과 kirocrew --version 결과를 보여 줘.
+```
+
+에이전트가 명령 실행 전에 승인을 요청하면 내용을 확인하고 승인합니다. 에이전트 진행이 매끄럽지 않으면 아래 절차를 직접 실행해도 됩니다.
 
 ## 2. Kiro Crew 설치
 
