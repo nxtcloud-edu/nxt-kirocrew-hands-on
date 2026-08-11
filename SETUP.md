@@ -40,7 +40,7 @@
 **kiro-cli**
 
 - 확인: `kiro-cli --version`
-- 없으면 — macOS: `curl -fsSL https://cli.kiro.dev/install | bash` · Windows: `irm 'https://cli.kiro.dev/install.ps1' | iex`
+- 없으면 — macOS: `curl -fsSL https://cli.kiro.dev/install | bash` · Windows: `irm 'https://cli.kiro.dev/install.ps1' | iex` (공식 다운로드 페이지 kiro.dev/downloads 의 CLI 카드와 동일한 명령입니다)
 - 설치까지만. 로그인 상태(`kiro-cli whoami`)는 확인해서 보고만 하고, 로그인되어 있지 않으면 "사람이 `kiro-cli login`을 직접 실행해야 함"이라고 보고한다.
 
 ### PATH 갱신 — 설치 직후 같은 셸에서 바로 확인하기
@@ -83,6 +83,8 @@ kiro-cli login 과 kirocrew setup 은 실행하지 마 — 그건 내가 직접 
 에이전트가 명령 실행 전에 승인을 요청하면 내용을 확인하고 승인합니다. 에이전트 진행이 매끄럽지 않으면 아래 절차를 직접 실행해도 됩니다.
 
 ## 2. Kiro Crew 설치
+
+> **주의**: 공식 다운로드 페이지(kiro.dev/downloads)의 `Download Crew` 버튼은 **데스크톱 앱**입니다. 이 과정은 데스크톱 앱이 아니라 **CLI 설치**(아래 명령)와 브라우저 대시보드를 사용합니다 — 그 버튼은 누르지 않습니다.
 
 ### macOS
 
