@@ -30,7 +30,25 @@ curl -fsSL https://cli.kiro.dev/install | bash
 irm 'https://cli.kiro.dev/install.ps1' | iex
 ```
 
-설치 후 새 터미널에서 `kiro-cli login`으로 로그인하고 `kiro-cli whoami`로 계정을 확인합니다. 로그인은 브라우저 인증이 필요하므로 사람이 직접 합니다.
+### 설치 직후 같은 셸에서 바로 확인하기 (PATH)
+
+설치 직후에는 현재 셸의 PATH에 새 명령이 아직 없을 수 있습니다. 새 터미널을 열지 않고 이어서 확인하려면 PATH를 먼저 갱신합니다.
+
+macOS:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+kiro-cli --version
+```
+
+Windows PowerShell:
+
+```powershell
+$env:Path = [Environment]::GetEnvironmentVariable('Path','User') + ';' + [Environment]::GetEnvironmentVariable('Path','Machine')
+kiro-cli --version
+```
+
+버전이 출력되면 설치 완료입니다. 이후 새 터미널에서 `kiro-cli login`으로 로그인하고 `kiro-cli whoami`로 계정을 확인합니다. 로그인은 브라우저 인증이 필요하므로 사람이 직접 합니다.
 
 ## 2. Kiro Crew 설치
 
@@ -38,18 +56,12 @@ irm 'https://cli.kiro.dev/install.ps1' | iex
 
 ```bash
 curl -fsSL https://download.crew.kiro.dev/cli.sh | sh
-exec zsh
+export PATH="$HOME/.local/bin:$PATH"
 command -v kirocrew
 kirocrew --version
 ```
 
-`command -v`가 비어 있으면 다음을 실행한 뒤 새 셸에서 다시 확인합니다.
-
-```bash
-export PATH="$HOME/.local/bin:$PATH"
-exec zsh
-kirocrew --version
-```
+설치 직후 같은 셸에는 새 경로가 없을 수 있으므로 두 번째 줄처럼 PATH를 갱신한 뒤 확인합니다 — 새 터미널을 열지 않아도 바로 검증됩니다. `command -v`가 `$HOME/.local/bin/kirocrew`를 출력하고 버전이 나오면 완료입니다. (사람이 터미널에서 직접 진행한다면 새 터미널을 여는 것으로도 충분합니다.)
 
 ### Windows PowerShell
 
