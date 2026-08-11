@@ -14,6 +14,24 @@ kirocrew setup 은 실행하지 마 — 그건 내가 직접 할 거야.
 
 에이전트가 명령 실행 전에 승인을 요청하면 내용을 확인하고 승인합니다. 에이전트 진행이 매끄럽지 않으면 아래 절차를 직접 실행해도 됩니다.
 
+## 1.5. kiro-cli가 없다면 먼저 설치
+
+`kiro-cli whoami`가 `command not found`로 실패하면 kiro-cli부터 설치합니다.
+
+### macOS
+
+```bash
+curl -fsSL https://cli.kiro.dev/install | bash
+```
+
+### Windows PowerShell
+
+```powershell
+irm 'https://cli.kiro.dev/install.ps1' | iex
+```
+
+설치 후 새 터미널에서 `kiro-cli login`으로 로그인하고 `kiro-cli whoami`로 계정을 확인합니다. 로그인은 브라우저 인증이 필요하므로 사람이 직접 합니다.
+
 ## 2. Kiro Crew 설치
 
 ### macOS
