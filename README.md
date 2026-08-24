@@ -19,5 +19,6 @@
 | 팩 | 세계 | 어울리는 분 |
 |---|---|---|
 | [`themes/program-office/`](themes/program-office/README.md) | 대학 사업단 — 교육 과정 모집·운영·보고 | 교직원 · 행정 담당자 · 사업단 |
+| [`themes/product-ops/`](themes/product-ops/README.md) | PM·기획자 — 프로젝트 점검·VOC·예산 배분 | PM · 기획자 · 운영 담당자 |
 
 실습 중 만들어지는 파일(Steering, 인계 문서 등)은 이 폴더 안에 생기며, 과정의 정리 단계에서 함께 정리합니다.

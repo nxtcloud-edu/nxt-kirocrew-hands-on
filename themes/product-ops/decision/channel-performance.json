@@ -1,0 +1,73 @@
+{
+  "report": "채널별 캠페인 성과 실측",
+  "period": "2026-Q3 (06-01 ~ 08-20)",
+  "currency": "KRW",
+  "channels": {
+    "search_ads": {
+      "quarter_summary": {
+        "spend": 120000000,
+        "revenue_attributed": 492000000,
+        "roas_pct": 410,
+        "new_customers": 2140,
+        "new_customer_share_pct": 18,
+        "cac": 56000
+      },
+      "monthly": [
+        {"month": "06", "spend": 40000000, "roas_pct": 405, "impressions": 8200000, "clicks": 246000, "conversions": 10330},
+        {"month": "07", "spend": 40000000, "roas_pct": 418, "impressions": 8100000, "clicks": 251000, "conversions": 10710},
+        {"month": "08(~20)", "spend": 40000000, "roas_pct": 407, "impressions": 8150000, "clicks": 244000, "conversions": 10250}
+      ],
+      "top_campaigns": [
+        {"name": "브랜드 검색어 상시", "spend_share_pct": 55, "roas_pct": 520},
+        {"name": "일반 키워드 상시", "spend_share_pct": 45, "roas_pct": 275}
+      ],
+      "assessment_raw": "ROAS 최상위. 다만 노출 물량이 3개월째 정체 — 브랜드 검색어는 수요 상한 도달. 증액하면 일반 키워드로 흘러가는데 그쪽 ROAS는 275%로 기준 미달"
+    },
+    "social": {
+      "quarter_summary": {
+        "spend": 90000000,
+        "revenue_attributed": 252000000,
+        "roas_pct": 280,
+        "new_customers": 5470,
+        "new_customer_share_pct": 46,
+        "cac": 16500
+      },
+      "monthly": [
+        {"month": "06", "spend": 28000000, "roas_pct": 230, "impressions": 21000000, "clicks": 315000, "conversions": 5040},
+        {"month": "07", "spend": 30000000, "roas_pct": 285, "impressions": 24500000, "clicks": 392000, "conversions": 6470},
+        {"month": "08(~20)", "spend": 32000000, "roas_pct": 322, "impressions": 26800000, "clicks": 428000, "conversions": 7280}
+      ],
+      "top_campaigns": [
+        {"name": "숏폼 리뷰 시리즈", "spend_share_pct": 40, "roas_pct": 370},
+        {"name": "신규 가입 프로모션", "spend_share_pct": 35, "roas_pct": 290},
+        {"name": "브랜드 인지 영상", "spend_share_pct": 25, "roas_pct": 150}
+      ],
+      "assessment_raw": "3개월 연속 상승, 8월 단월로는 322%로 기준 통과. 신규 유입의 절반을 담당. CAC도 최저"
+    },
+    "offline": {
+      "quarter_summary": {
+        "spend": 60000000,
+        "revenue_attributed": 90000000,
+        "roas_pct": 150,
+        "new_customers": 2610,
+        "new_customer_share_pct": 22,
+        "cac": 23000
+      },
+      "monthly": [
+        {"month": "06", "spend": 20000000, "roas_pct": 155},
+        {"month": "07", "spend": 20000000, "roas_pct": 148},
+        {"month": "08(~20)", "spend": 20000000, "roas_pct": 147}
+      ],
+      "top_campaigns": [
+        {"name": "지하철 옥외광고", "spend_share_pct": 60, "roas_pct": 120},
+        {"name": "대학가 팝업 부스", "spend_share_pct": 40, "roas_pct": 195}
+      ],
+      "assessment_raw": "정체. 다만 옥외광고의 브랜드 기여는 ROAS 실측에 잡히지 않는다는 것이 대행사 주장. 팝업 부스는 신규 유입 CAC가 의외로 좋음"
+    }
+  },
+  "data_quality_notes": [
+    "social: 8월 2주차(08-10~16) 전환 추적 태그 누락 사고 — 해당 주간 전환이 과소 집계되어 8월 실측 322%는 하한값이다",
+    "search_ads: 신규 고객 비중 18%에는 브랜드 검색어 유입이 포함 — 이미 브랜드를 아는 사용자일 가능성이 높아 순수 신규로 보기 어렵다는 데이터팀 의견",
+    "offline: 매출 귀속은 쿠폰 코드 입력 기준 — 코드를 입력하지 않은 전환은 누락된다"
+  ]
+}
