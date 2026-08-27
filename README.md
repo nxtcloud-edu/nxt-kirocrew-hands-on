@@ -20,5 +20,6 @@
 |---|---|---|
 | [`themes/program-office/`](themes/program-office/README.md) | 대학 사업단 — 교육 과정 모집·운영·보고 | 교직원 · 행정 담당자 · 사업단 |
 | [`themes/product-ops/`](themes/product-ops/README.md) | PM·기획자 — 프로젝트 점검·VOC·예산 배분 | PM · 기획자 · 운영 담당자 |
+| [`themes/campus-ops/`](themes/campus-ops/README.md) | 대학 생활 — 공지·동아리·회의록·규정 (도전 과제형) | 대학생 · 학생회 |
 
 실습 중 만들어지는 파일(Steering, 인계 문서 등)은 이 폴더 안에 생기며, 과정의 정리 단계에서 함께 정리합니다.
