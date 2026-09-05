@@ -22,3 +22,8 @@
 | [`themes/product-ops/`](themes/product-ops/README.md) | PM·기획자 — 프로젝트 점검·VOC·예산 배분 | PM · 기획자 · 운영 담당자 |
 
 실습 중 만들어지는 파일(Steering, 인계 문서 등)은 이 폴더 안에 생기며, 과정의 정리 단계에서 함께 정리합니다.
+
+## 수업별 주차 자료
+
+- [수업 자료 목록](class/README.md)
+- [국민대 2026년 2학기 · AI플랫폼개발](class/kookmin-2026-2/README.md)
