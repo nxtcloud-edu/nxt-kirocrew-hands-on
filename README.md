@@ -26,4 +26,4 @@
 ## 수업별 주차 자료
 
 - [수업 자료 목록](class/README.md)
-- [국민대 2026년 2학기 · AI플랫폼개발](class/kookmin-2026-2/README.md)
+- [국민대 2026년 2학기 · AI플랫폼개발](class/kookmin-2026-2/ai-platform-development/README.md)
