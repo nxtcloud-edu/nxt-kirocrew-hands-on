@@ -23,3 +23,8 @@
 | [`themes/campus-ops/`](themes/campus-ops/README.md) | 대학 생활 — 공지·동아리·회의록·규정 (도전 과제형) | 대학생 · 학생회 |
 
 실습 중 만들어지는 파일(Steering, 인계 문서 등)은 이 폴더 안에 생기며, 과정의 정리 단계에서 함께 정리합니다.
+
+## 수업별 주차 자료
+
+- [수업 자료 목록](class/README.md)
+- [국민대 2026년 2학기 · AI플랫폼개발](class/kookmin-2026-2/ai-platform-development/README.md)
