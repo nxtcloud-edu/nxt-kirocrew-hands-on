@@ -64,7 +64,7 @@ kirocrew doctor
 앱 설치 후 새 터미널에서 확인합니다. 명령이 없으면 앱 버전·연결 상태와 CLI PATH를 강사와 확인합니다. 앱 설치와 CLI 명령 노출은 별개일 수 있으므로 무조건 재설치하지 않습니다. Slack 미설정과 실제 인증·연결 실패를 구분합니다. 수업 승인 모드는 Normal입니다.
 
 ## 7. 수업 자료 연결
-개인 GitHub 계정으로 수업 레포를 Fork하고 자기 포크를 clone합니다. IDE와 Crew 세션 프로젝트에 SETUP.md와 class가 있는 저장소 최상위 폴더를 연결합니다. Normal 승인 모드로 시작합니다.
+개인 GitHub 계정으로 수업 레포를 Fork합니다. Kiro IDE 시작 화면의 Clone repository(또는 명령 팔레트의 Git: Clone)에 자기 포크의 HTTPS 주소를 넣고 저장 위치를 선택합니다. 완료 뒤 Open으로 열고, 이미 Clone했다면 Open Folder로 기존 폴더를 엽니다. IDE 탐색기에서 week02/README.md와 data·submissions를 직접 확인합니다. IDE와 Crew 세션 프로젝트에 SETUP.md와 class가 있는 저장소 최상위 폴더를 연결합니다. Normal 승인 모드로 시작합니다.
 Git 설치 전 ZIP으로 시작했다면 제출 전에 자기 포크를 clone하고 결과를 옮깁니다.
 
 국민대 2주차 확인 요청:

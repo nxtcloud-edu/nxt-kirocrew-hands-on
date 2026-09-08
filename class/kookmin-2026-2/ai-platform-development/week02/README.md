@@ -6,7 +6,7 @@ AI Class 오프닝 이후 진행하는 국민대 AI플랫폼개발 수업입니�
 
 | 번호 | 자료 | 언제 볼까 |
 |---|---|---|
-| 00 | [수업 PPT](00_수업자료.pptx) · [PDF](00_수업자료.pdf) | 수업 화면 · v26, 91장 |
+| 00 | [수업 PPT](00_수업자료.pptx) · [PDF](00_수업자료.pdf) | 수업 화면 · 발표자 메모 포함 |
 | 01 | [GitHub 준비와 제출](01_GitHub_준비와_제출.md) | 인증·Fork·Clone·첫 파일·Commit·Push |
 | 02 | [개념 정리](02_개념_정리.md) | 에이전트와 도구, 검증의 의미 |
 | 03 | [실습 안내](03_실습_안내.md) | 첫 크루와 첫 업무 · 복사용 지시문 |
@@ -44,7 +44,7 @@ week02/
 ## 준비와 작업 흐름
 
 1. Kiro IDE·CLI·Crew 설치 및 인증, Git·GitHub CLI 준비.
-2. nxtcloud-edu 레포를 내 계정으로 Public Fork → 내 포크를 Clone.
+2. nxtcloud-edu 레포를 내 계정으로 Public Fork → Kiro IDE에서 내 포크 URL로 Clone → Open → 탐색기에서 week02 확인.
 3. IDE에서 `week02/submissions/start.md` 작성 → Commit·Push → 내 GitHub에서 확인.
 4. Crew에서 **같은 로컬 레포 최상위 폴더** 열기 → 첫 크루 생성 → 첫 업무 실행.
 5. 원문 근거 검증 → 기준 보완 → 파일 저장 → 버전 기록.

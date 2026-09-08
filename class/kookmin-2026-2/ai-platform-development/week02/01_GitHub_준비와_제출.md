@@ -76,15 +76,28 @@ upstream이 이미 있으면 URL을 확인하며, 임의로 덮어쓰지 않습�
 ## 1. 계정과 Fork
 GitHub에 로그인하고 [nxtcloud-edu 원본 레포](https://github.com/nxtcloud-edu/nxt-kirocrew-hands-on)를 엽니다. Fork → Owner에 내 계정 → Create fork. 이미 포크가 있다면 그것을 사용합니다. 주소의 소유자가 내 ID인지 확인합니다.
 
-## 2. 내 컴퓨터로 Clone
-Git은 이력 관리 도구, GitHub는 온라인 저장소입니다. IDE 새 터미널에서 `git --version`을 확인합니다. 없으면 https://git-scm.com/downloads 의 OS별 안내로 설치하고 새 터미널을 엽니다.
-내 포크의 Code → HTTPS 주소를 복사합니다. 아래 꺾쇠 부분 전체를 실제 주소로 교체합니다.
-```bash
+## 2. Kiro IDE에서 내 포크 Clone과 폴더 열기
+
+1. GitHub의 **자기 포크**에서 **Code → HTTPS** 주소를 복사합니다. 저장소 이름만이 아니라 `https://github.com/내계정/nxt-kirocrew-hands-on.git` 전체 주소입니다.
+2. Kiro IDE 시작 화면의 **Clone repository**를 누릅니다. 기존 창에서는 명령 팔레트(Windows `Ctrl+Shift+P`, Mac `Cmd+Shift+P`) → **Git: Clone**.
+3. 자기 포크 URL을 붙여넣고 Clone합니다. `YOUR-GITHUB-ID` 같은 예시 문구는 실제 계정으로 바꿉니다. **Clone from GitHub**로 목록에서 찾을 수도 있으나 IDE GitHub 로그인 상태에 따라 인증이 필요할 수 있어 수업은 URL 방식으로 진행합니다.
+4. 저장할 부모 폴더를 선택하고, Clone 완료 후 **Open**으로 엽니다. 이미 Clone했다면 다시 받지 않고 **File → Open Folder**(Mac은 **Open**으로 폴더 선택도 가능)로 기존 로컬 레포를 엽니다.
+5. IDE 탐색기에 **SETUP.md와 class가 함께** 보이는지 확인합니다. `class/kookmin-2026-2/ai-platform-development/week02/README.md`를 열고, Markdown 미리보기(Windows `Ctrl+Shift+V`, Mac `Cmd+Shift+V`)를 확인합니다.
+6. `data/`와 `submissions/` 위치까지 직접 찾은 뒤, IDE 새 터미널에서 `git remote -v`로 origin이 자기 포크인지 확인합니다. 설치·로그인만으로 준비 완료가 아닙니다.
+
+![Kiro Clone 시작](images/ide-live/ide-clone-start.png)
+![내 포크 주소 입력 예시](images/ide-live/ide-clone-url.png)
+![IDE에서 week02 열기](images/ide-live/ide-week02-open.png)
+
+주소 입력 캡처의 YOUR-GITHUB-ID는 예시입니다. 폴더 열기 캡처는 강사 로컬 레포이며 학생은 자기 포크를 사용합니다.
+
+터미널로 이미 Clone한 경우에도 같은 결과입니다. 중복으로 Clone하지 않습니다.
+```sh
 git clone <내 포크의 HTTPS 주소>
 cd nxt-kirocrew-hands-on
 git remote -v
 ```
-origin 주소가 내 GitHub 계정이어야 합니다. IDE Open Folder로 복제된 폴더를 엽니다. ZIP으로 시작했다면 clone한 폴더에 결과를 옮깁니다.
+복사한 레포를 IDE에서 열고 다음 단계로 이동합니다.
 
 ## 3. 작성자 설정
 복제한 레포 안에서 본인 정보로 바꿔 실행합니다. 로그인과는 별개인 커밋 작성자 정보입니다.
