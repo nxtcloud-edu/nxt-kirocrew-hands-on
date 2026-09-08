@@ -1,15 +1,12 @@
 # GitHub 처음 시작 · 자료 받기와 제출
 
-![수업 레포와 내 포크, 로컬의 이동 관계](images/github-upstream-origin-local.png)
-
-
 ## 준비 순서 · 첫 Push 후 Crew 연결
 
 1. Kiro IDE 설치·로그인 → Node.js·npm 확인 → Kiro CLI 인증 → Crew 설치·진단.
 2. Git·GitHub CLI 설치 확인 → `gh auth login`으로 HTTPS·브라우저 인증 → `gh auth status`.
 3. nxtcloud-edu 수업 레포를 내 계정에 Public Fork → 내 포크를 Clone → Kiro IDE에서 로컬 레포 열기.
 4. `upstream`은 nxtcloud-edu 원본, `origin`은 내 포크인지 확인. 커밋 작성자 이름·이메일 설정.
-5. `class/kookmin-2026-2/ai-platform-development/week02/submissions/start.md`를 IDE에서 만들고 저장.
+5. `class/kookmin-2026-2/ai-platform-development/week02/submissions/start.md`를 IDE에서 열어 빈 항목을 직접 채우고 저장.
 
 ```markdown
 # 나의 첫 작업 기록
@@ -30,8 +27,7 @@ git push origin main
 7. Kiro Crew에서 **방금 Clone한 동일한 로컬 레포의 최상위 폴더**를 프로젝트로 열기. GitHub URL이나 submissions 폴더를 선택하는 것이 아님.
 8. 첫 크루 생성 → 프로젝트 연결 확인 → 수업 자료 읽기와 첫 업무 지시.
 
-`start.md`는 학생이 직접 작성하는 첫 기록입니다. 강사 원본에는 완성 파일을 배포하지 않습니다. 이후 AI 실습 결과와 컨텍스트 파일도 같은 submissions 아래에 누적합니다.
-
+`start.md`는 미리 제공된 빈 양식입니다. 학생이 자신의 관심사와 질문을 채웁니다. 완성된 답안은 제공하지 않습니다. 이후 AI 실습 결과와 컨텍스트 파일도 같은 submissions 아래에 누적합니다.
 
 ## Git·GitHub CLI 설치와 인증
 Kiro IDE 로그인 후 새 터미널에서 확인합니다. Git과 GitHub CLI(gh)는 별도 도구입니다.
@@ -72,7 +68,6 @@ git remote -v
 upstream이 이미 있으면 URL을 확인하며, 임의로 덮어쓰지 않습니다. origin은 자기 계정, upstream은 nxtcloud-edu 주소인지 확인합니다.
 갱신은 **GitHub Sync fork: upstream 원본 → origin 포크**, 이후 **git pull --ff-only origin main: origin → local**입니다. 결과는 local에서 Commit한 뒤 origin에 Push합니다. upstream에 Push하지 않습니다. remote 이름은 관례이며 자동 권한·자동 동기화를 뜻하지 않습니다.
 
-
 ## 1. 계정과 Fork
 GitHub에 로그인하고 [nxtcloud-edu 원본 레포](https://github.com/nxtcloud-edu/nxt-kirocrew-hands-on)를 엽니다. Fork → Owner에 내 계정 → Create fork. 이미 포크가 있다면 그것을 사용합니다. 주소의 소유자가 내 ID인지 확인합니다.
 
@@ -84,12 +79,6 @@ GitHub에 로그인하고 [nxtcloud-edu 원본 레포](https://github.com/nxtclo
 4. 저장할 부모 폴더를 선택하고, Clone 완료 후 **Open**으로 엽니다. 이미 Clone했다면 다시 받지 않고 **File → Open Folder**(Mac은 **Open**으로 폴더 선택도 가능)로 기존 로컬 레포를 엽니다.
 5. IDE 탐색기에 **SETUP.md와 class가 함께** 보이는지 확인합니다. `class/kookmin-2026-2/ai-platform-development/week02/README.md`를 열고, Markdown 미리보기(Windows `Ctrl+Shift+V`, Mac `Cmd+Shift+V`)를 확인합니다.
 6. `data/`와 `submissions/` 위치까지 직접 찾은 뒤, IDE 새 터미널에서 `git remote -v`로 origin이 자기 포크인지 확인합니다. 설치·로그인만으로 준비 완료가 아닙니다.
-
-![Kiro Clone 시작](images/ide-live/ide-clone-start.png)
-![내 포크 주소 입력 예시](images/ide-live/ide-clone-url.png)
-![IDE에서 week02 열기](images/ide-live/ide-week02-open.png)
-
-주소 입력 캡처의 YOUR-GITHUB-ID는 예시입니다. 폴더 열기 캡처는 강사 로컬 레포이며 학생은 자기 포크를 사용합니다.
 
 터미널로 이미 Clone한 경우에도 같은 결과입니다. 중복으로 Clone하지 않습니다.
 ```sh
@@ -113,7 +102,7 @@ git config user.email "내 GitHub 이메일"
 - workspace/: 작업 계획과 개인 메모
 - context/: 판단 기준과 작업 상태
 - career-first.md / career-check.md: 선택 확장 결과
-- execution-record.md: 실행 기록 양식을 복사해 작성
+- execution-record.md: 제공된 빈 양식에 실행 기록 작성
 제공 data와 공유 양식은 보존합니다. 개인 포크이므로 별도 학생 이름 폴더는 필요 없습니다.
 
 ## 5. Commit·Push
