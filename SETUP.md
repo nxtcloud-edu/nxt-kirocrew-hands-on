@@ -1,169 +1,85 @@
-# 시작 준비 — Kiro Crew 설치와 대시보드 실행
+# 시작 준비 · 공식 앱 다운로드
 
-이 폴더를 Kiro IDE로 연 직후, 실습을 시작할 수 있는 상태(대시보드 접속)까지 준비하는 문서입니다. Kiro IDE 설치와 로그인은 별도 안내를 따릅니다.
+## 1. Kiro IDE
+[공식 다운로드](https://kiro.dev/downloads/)에서 내 OS에 맞는 IDE를 설치하고 수업 계정으로 로그인합니다.
 
-## 0. 사전 요구 점검과 설치 — 에이전트가 수행할 수 있는 절차
+## Git·GitHub CLI 설치와 인증
+Kiro IDE 로그인 후 새 터미널에서 확인합니다. Git과 GitHub CLI(gh)는 별도 도구입니다.
+```sh
+git --version
+gh --version
+```
+없으면 [Git 공식 다운로드](https://git-scm.com/downloads)와 [GitHub CLI 공식 설치 안내](https://cli.github.com/)에서 운영체제별 절차로 설치합니다. 설치 후 IDE 새 터미널에서 재확인합니다.
 
-이 절은 에이전트가 읽고 그대로 수행할 수 있도록 쓰여 있습니다. Kiro IDE 채팅에 "이 폴더의 SETUP.md에서 0번 절차를 수행해 줘"라고 맡기면 됩니다.
+먼저 `gh auth status`로 기존 인증을 확인합니다. 올바른 자기 계정으로 준비되어 있으면 반복 로그인하지 않습니다. 처음이면:
+```sh
+gh auth login
+```
+**GitHub.com → HTTPS → Git 인증 질문에 Y → Login with a web browser** 순서로 진행합니다. 표시된 일회용 코드를 본인이 입력하고 승인합니다.
+```sh
+gh auth status
+```
+기존 gh 인증은 있지만 Git과 연결이 안 된 경우 `gh auth setup-git`을 실행합니다. 여러 계정을 쓰고 있다면 사용할 계정을 먼저 강사와 확인합니다.
 
-**에이전트가 지켜야 할 경계:**
+- Settings에서 Personal Access Token을 직접 발급하는 과정은 기본 실습에 없습니다.
+- gh 인증과 `git config user.name / user.email` 작성자 설정은 별개입니다.
+- Public 포크는 강사에게 별도 쓰기 권한을 받을 필요가 없습니다. 자기 포크에 Push합니다.
+- 이 인증 확인은 실제 Push 성공을 대신하지 않습니다. 제출 때 Push와 온라인 파일 확인까지 진행합니다.
+- 인증 코드·토큰은 캡처나 제출 파일에 넣지 않습니다.
 
-- 점검과 설치, 버전 확인까지만 수행한다. **로그인(`kiro-cli login`)과 초기 설정(`kirocrew setup`)은 실행하지 않는다** — 브라우저 인증과 대화형 질문은 사람이 직접 한다.
-- 이미 설치된 도구는 재설치하지 않고 버전만 보고한다.
-- 설치 직후 같은 셸에서 명령이 인식되지 않으면 아래 "PATH 갱신"을 수행한 뒤 다시 확인한다.
-- 모든 항목이 끝나면 아래 "완료 보고 형식"으로 보고한다.
+공식 근거: [GitHub 인증 안내](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git), [gh auth login](https://cli.github.com/manual/gh_auth_login).
 
-### 점검 대상 (순서대로)
-
-**Git**
-
-- 확인: `git --version`
-- 없으면 — macOS: `brew install git` (brew가 없으면 아래 Homebrew 먼저) · Windows: `winget install --id Git.Git -e`
-
-**Homebrew (macOS만)**
-
-- 확인: `brew --version`
-- 없으면: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-- 설치가 관리자 암호를 요구해 진행할 수 없으면 중단하고, 사람에게 직접 설치를 안내한다.
-
-**Python 3.12**
-
-- 확인: `python3 --version` (macOS) · `py -3.12 --version` (Windows) — 3.12 이어야 한다
-- 없으면 — macOS: `brew install python@3.12` · Windows: `winget install --id Python.Python.3.12 -e`
-- Windows는 Microsoft Store alias가 아니라 실제 CPython이어야 한다.
-
-**uv**
-
-- 확인: `uvx --version`
-- 없으면 — macOS: `brew install uv` · Windows: `winget install --id astral-sh.uv -e`
-
-**kiro-cli**
-
-- 확인: `kiro-cli --version`
-- 없으면 — macOS: `curl -fsSL https://cli.kiro.dev/install | bash` · Windows: `irm 'https://cli.kiro.dev/install.ps1' | iex` (공식 다운로드 페이지 kiro.dev/downloads 의 CLI 카드와 동일한 명령입니다)
-- 설치까지만. 로그인 상태(`kiro-cli whoami`)는 확인해서 보고만 하고, 로그인되어 있지 않으면 "사람이 `kiro-cli login`을 직접 실행해야 함"이라고 보고한다.
-
-### PATH 갱신 — 설치 직후 같은 셸에서 바로 확인하기
-
-설치 직후에는 현재 셸의 PATH에 새 명령이 아직 없을 수 있다. 새 터미널을 열지 않고 이어서 확인하려면:
-
-macOS:
-
+## 2. IDE 터미널 · Node.js·npm 점검
+IDE 로그인 후 Terminal 메뉴에서 새 터미널을 엽니다.
 ```bash
-export PATH="$HOME/.local/bin:$PATH"
+node --version
+npm --version
 ```
+없으면 https://nodejs.org/ 에서 LTS를 설치하고 새 터미널에서 재확인합니다. 프런트엔드 개발·빌드를 위한 준비이며 Crew 앱 자체의 일괄 필수 조건을 뜻하지 않습니다.
 
-Windows PowerShell:
-
-```powershell
-$env:Path = [Environment]::GetEnvironmentVariable('Path','User') + ';' + [Environment]::GetEnvironmentVariable('Path','Machine')
-```
-
-### 완료 보고 형식
-
-```text
-git: 2.x.x
-brew: 4.x.x (macOS)
-python3: 3.12.x
-uvx: 0.x.x
-kiro-cli: x.x.x / 로그인: <계정> 또는 "로그인 필요 — 사람이 kiro-cli login 실행"
-```
-
-## 1. 에이전트에게 설치를 맡기기
-
-Kiro IDE 채팅에 아래를 붙여넣습니다.
-
-```text
-이 폴더의 SETUP.md 를 읽고 "0. 사전 요구 점검과 설치"와
-"2. Kiro Crew 설치"를 순서대로 진행해 줘.
-kiro-cli login 과 kirocrew setup 은 실행하지 마 — 그건 내가 직접 할 거야.
-끝나면 0번의 완료 보고 형식과 kirocrew --version 결과를 보여 줘.
-```
-
-에이전트가 명령 실행 전에 승인을 요청하면 내용을 확인하고 승인합니다. 에이전트 진행이 매끄럽지 않으면 아래 절차를 직접 실행해도 됩니다.
-
-## 2. Kiro Crew 설치
-
-> 이 과정의 기본 경로는 **CLI 설치**(아래 명령)와 브라우저 대시보드입니다. 공식 다운로드 페이지(kiro.dev/downloads)의 `Download Crew` 버튼은 **데스크톱 앱**으로, 기본 경로가 아니라 아래 "설치가 막히면"의 백업 경로입니다.
-
-### macOS
-
+## 3. Kiro CLI 설치·인증
+https://kiro.dev/downloads/ 의 CLI 항목에서 내 OS의 공식 절차를 따릅니다.
 ```bash
-curl -fsSL https://download.crew.kiro.dev/cli.sh | sh
-export PATH="$HOME/.local/bin:$PATH"
-command -v kirocrew
+kiro-cli --version
+kiro-cli login
+kiro-cli whoami
+```
+로그인은 직접 진행하며 이미 수업 계정으로 인증되어 있으면 생략합니다. IDE 로그인과 CLI 인증을 따로 확인합니다.
+
+## 4. Kiro Crew
+같은 페이지에서 **Download Kiro Crew**를 선택합니다. 공식 GitHub 다운로드 안내로 이동할 수 있습니다.
+- macOS·Windows: 내 OS의 **Stable** 데스크톱 설치 파일을 내려받아 설치·실행합니다.
+- Linux: 공식 README의 배포판별 설치 안내를 강사와 확인합니다. 공식 문서는 Linux에 CLI 설치를 우선 안내하므로 앱 설치만으로 일괄 진행하지 않습니다.
+- 설치 파일이 없거나 오류가 나면 OS·오류 문구를 강사에게 보여줍니다. 임의의 외부 설치 파일이나 우회 명령을 사용하지 않습니다.
+
+## 5. 첫 실행·계정 확인
+앱의 CLI 설치·로그인 안내가 나타나면 안내에 따라 진행합니다. 브라우저 인증은 직접 완료합니다. 이미 로그인된 경우 수업 계정을 확인합니다.
+일반적인 앱 실행은 내장 Gateway를 시작하므로 터미널에서 `kirocrew gateway`나 `kirocrew setup`을 별도로 실행하는 것을 기본 절차로 삼지 않습니다. Slack·AWS 연동은 이번 실습에 필요하지 않습니다.
+
+## 6. IDE 터미널 · Crew 점검
+```bash
 kirocrew --version
-```
-
-설치 직후 같은 셸에는 새 경로가 없을 수 있으므로 두 번째 줄처럼 PATH를 갱신한 뒤 확인합니다 — 새 터미널을 열지 않아도 바로 검증됩니다. `command -v`가 `$HOME/.local/bin/kirocrew`를 출력하고 버전이 나오면 완료입니다. (사람이 터미널에서 직접 진행한다면 새 터미널을 여는 것으로도 충분합니다.)
-
-### Windows PowerShell
-
-```powershell
-cd $HOME
-git clone https://github.com/kirodotdev/KiroCrew.git kirocrew-app
-cd kirocrew-app
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install -e .
-.\.venv\Scripts\Activate.ps1
-kirocrew --version
-```
-
-새 터미널을 열 때마다 가상환경을 다시 활성화합니다: `cd "$HOME\kirocrew-app"; .\.venv\Scripts\Activate.ps1`
-
-## 2.5. 설치가 막히면 — 데스크톱 앱 (백업 경로)
-
-CLI 설치가 환경 문제로 계속 실패하면, 공식 다운로드 페이지(kiro.dev/downloads)에서 `Download Crew`로 **데스크톱 앱**을 받아 실행합니다. 앱은 같은 Kiro Crew 대시보드를 제공하며, 이 기기에 이미 만들어진 크루·세션·작업 이력이 있다면 그대로 이어집니다.
-
-- 실습의 대시보드 화면 절차는 앱에서도 동일하게 진행합니다.
-- 터미널 명령이 필요한 검증 단계는 앱 좌측의 `Terminal` 메뉴를 사용하거나, 강사 시연으로 대체합니다.
-- 로그인·초기 설정 질문이 나오면 강사와 함께 진행합니다.
-
-## 3. 초기 설정 — 여기부터는 직접 합니다
-
-설치가 끝나면 이 실습 폴더에서 실행합니다. 대화형 질문에 답해야 하므로 사람이 직접 진행합니다.
-
-```bash
-kirocrew setup
-```
-
-| 질문 | 권장 응답 |
-|---|---|
-| `Workspace path [...]` | `Enter` (기본 별도 경로 사용) |
-| `Configure Slack tokens? [Y/n]` | `n` |
-| `Slash command name [kirocrew]` | `Enter` |
-| `Timezone [...]` | `Enter` (한국은 필요 시 `Asia/Seoul`) |
-| `Install KiroCrew desktop app ... [Y/n]` | `n` |
-| `Launch KiroCrew on AWS now? [y/N]` | `Enter` |
-
-```bash
 kirocrew doctor
 ```
+앱 설치 후 새 터미널에서 확인합니다. 명령이 없으면 앱 버전·연결 상태와 CLI PATH를 강사와 확인합니다. 앱 설치와 CLI 명령 노출은 별개일 수 있으므로 무조건 재설치하지 않습니다. Slack 미설정과 실제 인증·연결 실패를 구분합니다. 수업 승인 모드는 Normal입니다.
 
-`doctor`에서 다음은 이 과정의 문제로 보지 않습니다 — Slack 미설정, `project dir: not set`, `whisper: not found`, Gateway 실행 전의 `Gateway not running`.
+## 7. 수업 자료 연결
+개인 GitHub 계정으로 수업 레포를 Fork하고 자기 포크를 clone합니다. IDE와 Crew 세션 프로젝트에 SETUP.md와 class가 있는 저장소 최상위 폴더를 연결합니다. Normal 승인 모드로 시작합니다.
+Git 설치 전 ZIP으로 시작했다면 제출 전에 자기 포크를 clone하고 결과를 옮깁니다.
 
-## 4. Gateway 실행과 접속
-
-터미널 하나를 Gateway 전용으로 씁니다. 실습 중에는 끄지 않습니다.
-
-```bash
-kirocrew gateway
-```
-
-브라우저에서 `http://localhost:5476`을 엽니다.
-
-### 처음 접속 시 — Import Setup 안내
-
-첫 접속에서 `Import Setup` 화면(Bring your crew with you)이 뜰 수 있습니다. 이 컴퓨터에서 다른 AI 도구(Codex, Claude Code 등)를 쓰고 있었다면 그 설정을 가져올지 묻는 것입니다.
-
-**이 과정에서는 `Skip all`을 누릅니다.** 개인 설정을 가져오면 실습 화면이 안내와 달라질 수 있습니다. 화면이 뜨지 않으면 그대로 진행합니다.
-
-## 5. 준비 완료 확인
-
+국민대 2주차 확인 요청:
 ```text
-□ 대시보드가 열린다 (http://localhost:5476)
-□ 이 폴더에서 git status 를 치면 브랜치 main 이 보인다
+class/kookmin-2026-2/ai-platform-development/week02/data/course/notices.md를 읽고
+제목과 공지 ID 목록만 알려줘. 파일은 수정하지 마.
 ```
+앱 화면·계정·연결 경로·읽은 원문과 응답까지 확인하면 실습 준비 완료입니다.
 
-여기까지 됐으면 교재의 Lab 0(세션 준비)으로 이동합니다.
+## 문제 해결용 참고
+[이전 CLI 설치 절차](SETUP_CLI_FALLBACK.md)는 강사와 원인을 확인한 뒤 필요한 부분만 사용합니다. AI에게 설치 전체를 맡기는 기본 지시는 사용하지 않습니다.
+
+확인 기준: 2026-09-08 공식 다운로드 및 공식 README.
+- https://kiro.dev/downloads/
+- https://github.com/kirodotdev/KiroCrew#quick-start
+
+## 국민대 W02 · 설치 다음 순서
+설치·인증 완료 후 Public Fork와 Clone을 진행합니다. week02/submissions/start.md를 IDE에서 작성하고 첫 Commit·Push 및 GitHub 웹 확인을 마친 뒤, Crew에 동일한 로컬 레포 최상위 폴더를 연결합니다. 자세한 순서는 [W02 실습 안내](class/kookmin-2026-2/ai-platform-development/week02/03_실습_안내.md)를 따릅니다.
