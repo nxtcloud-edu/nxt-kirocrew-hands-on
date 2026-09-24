@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>빛담 가을사진전(E04) 운영 보고서 (초기)</title>
+<style>
+  /* 뷰(다크/라이트) 무관하게 동일하게 보이도록 색을 명시 고정 */
+  :root { color-scheme: light; }
+  html { background: #ffffff; }
+  body { font-family: -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
+         margin: 0 auto; max-width: 860px; padding: 2rem 1.25rem; line-height: 1.6;
+         background: #ffffff; color: #1a1a1a; }
+  h1 { font-size: 1.6rem; margin-bottom: .25rem; color: #1a1a1a; }
+  h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 2px solid #4457ff;
+        padding-bottom: .3rem; color: #1a1a1a; }
+  p, li, td { color: #1a1a1a; }
+  ul { padding-left: 1.2rem; }
+  li { margin: .4rem 0; }
+  strong { color: #1a1a1a; }
+  a { color: #2a3fd0; }
+  table { border-collapse: collapse; width: 100%; margin-top: .75rem; font-size: .95rem;
+          background: #ffffff; }
+  th, td { border: 1px solid #cccccc; padding: .5rem .6rem; text-align: left; }
+  th { background: #4457ff; color: #ffffff; }
+  tr:nth-child(even) td { background: #eef0ff; }
+  .meta { color: #666666; font-size: .85rem; }
+  .note { color: #666666; font-size: .85rem; }
+</style>
+</head>
+<body>
+  <h1>빛담 가을사진전(E04) 운영 보고서 (초기)</h1>
+  <p class="meta">생성: 2026-09-23 10:31</p>
+
+  <h2>문서 요약</h2>
+  <ul>
+    <li><strong>MEMO-04 운영회의 메모(2026-09-18)</strong> — 장소 승인 정원은 160명이며 홍보한 180명으로의 정원 변경은 요청 예정이고 승인 기록은 없다. 기념품 회비 처리 논의, 외부인 참가 조건은 미결정.</li>
+    <li><strong>NOTICE-04 홍보 안내문(2026-09-10)</strong> — 홍보 모집 정원 180명, 행사 2026-09-28 학생회관 전시실. 이 안내는 홍보용이며 장소 승인서가 아님을 명시.</li>
+    <li><strong>APPROVAL-FUND-04 지원금 승인서(2026-09-12)</strong> — 총 승인 한도 1,500,000원, 1차 지급 1,000,000원(거래 T091), 잔여 500,000원은 정산 승인 후 지급 예정이라 현재 가용현금 아님. 기념품·개인선물은 지원 제외(RULE-01).</li>
+    <li><strong>ACCOUNT-01 회계 집계 기준</strong> — CSV 120건(2026-07-01~09-22), 기초잔액 지원금 0·회비 800,000. 수입/환불입금 +, 지출/환불지급 -. E04 순지출=지출+환불지급-환불입금(수입 제외). 구매계획은 회계에 합산하지 않음.</li>
+    <li><strong>CLUB-01 운영 규칙</strong> — 물품 구매 기본 인원은 확정 인원이며 대기자는 확정에 미리 더하지 않는다. 회비 기념품은 1인 3,000원 이내·결재·영수증. 판단 근거를 문서 ID·조항으로 기록.</li>
+    <li><strong>집계 결과(aggregate_result.json)</strong> — 확정 140/대기 40/취소 20, 인화체험 신청 105·식음료 신청 112. 지원금 잔액 250,000·회비 잔액 1,843,000. E04 순지출 지원금 750,000·회비 146,000. 140/160/180 전 시나리오에서 지원금 부족, 회비는 충분.</li>
+  </ul>
+
+  <h2>참가 현황 (E04, 확정 기준)</h2>
+  <table>
+    <thead><tr><th>구분</th><th>인원 / 값</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>확정</td><td>140명</td><td>참가신청.csv · CLUB-01 제1조</td></tr>
+      <tr><td>대기</td><td>40명</td><td>참가신청.csv (확정에 미포함 · CLUB-01 제3조)</td></tr>
+      <tr><td>취소</td><td>20명</td><td>참가신청.csv</td></tr>
+      <tr><td>인화체험 신청(확정자)</td><td>105명</td><td>참가신청.csv</td></tr>
+      <tr><td>식음료 신청(확정자)</td><td>112명</td><td>참가신청.csv</td></tr>
+    </tbody>
+  </table>
+
+  <h2>재원별 현재 잔액 · E04 순지출</h2>
+  <table>
+    <thead><tr><th>재원</th><th>현재 잔액</th><th>E04 순지출</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>학교지원금</td><td>250,000원</td><td>750,000원</td><td>ACCOUNT-01 제1~3조 (기초 0, T091 1차입금 반영, 잔여 500,000 미가용)</td></tr>
+      <tr><td>동아리회비</td><td>1,843,000원</td><td>146,000원</td><td>ACCOUNT-01 제1~3조 (기초 800,000)</td></tr>
+    </tbody>
+  </table>
+  <p class="note">순지출 = 지출 + 환불지급 − 환불입금 (수입 제외, ACCOUNT-01 제3조). 회계 유형에 '환불지급' 거래는 없음(수입·지출·환불입금 3종).</p>
+
+  <h2>구매계획 비교 (140 · 160 · 180명)</h2>
+  <table>
+    <thead><tr><th>시나리오</th><th>인원근거</th><th>지원금 필요</th><th>지원금 잔액</th><th>지원금 판정</th><th>회비 필요</th><th>회비 잔액</th><th>회비 판정</th></tr></thead>
+    <tbody>
+      <tr><td>140명(확정)</td><td>CLUB-01 제1조</td><td>256,000</td><td>250,000</td><td>❌ 6,000 부족</td><td>204,000</td><td>1,843,000</td><td>✅ 충분</td></tr>
+      <tr><td>160명(승인정원)</td><td>MEMO-04</td><td>284,000</td><td>250,000</td><td>❌ 34,000 부족</td><td>226,000</td><td>1,843,000</td><td>✅ 충분</td></tr>
+      <tr><td>180명(홍보·미승인)</td><td>NOTICE-04</td><td>312,000</td><td>250,000</td><td>❌ 62,000 부족</td><td>248,000</td><td>1,843,000</td><td>✅ 충분</td></tr>
+    </tbody>
+  </table>
+  <p class="note">산식: 참가자 항목 = 확정/시나리오 인원 × 계수 × 단가, 고정 항목 = 계수 × 단가 (ACCOUNT-01 제5조). 구매계획은 회계 거래에 합산하지 않음(제4조).</p>
+
+  <h2>가능한 운영안</h2>
+  <ul>
+    <li><strong>기본안 — 140명(확정) 운영</strong>: 승인 정원 160명 이내로 안전. 회비 충분. 학교지원금은 6,000원 부족 → 지원금 소액 부족분을 회비 전용 또는 지원 적격 항목 재조정으로 해소 검토(ACCOUNT-01 제4조 사용목적·증빙 대조). <em>현재 근거로 즉시 실행 가능한 안.</em></li>
+    <li><strong>확대안 — 160명(승인정원)까지</strong>: 대기자 전환으로 최대 160명. 지원금 34,000원 부족 → 부족분 재원 대책 필요. 대기자 전환은 승인정원·물품·재원 확인 후 신청 순서대로(CLUB-01 제3조).</li>
+    <li><strong>확대안 — 180명(홍보정원)</strong>: <span style="color:#c0392b">정원 변경 미승인(MEMO-04)</span>이라 현재 실행 불가. 장소 정원 160→180 변경 승인 + 지원금 62,000원 부족분 대책이 선행되어야 함.</li>
+  </ul>
+
+  <h2>추가 확인 사항</h2>
+  <ul>
+    <li><strong>정원 변경 승인</strong>: 180명은 요청 예정 단계, 승인 기록 없음(MEMO-04) → 승인 여부 확인 필요.</li>
+    <li><strong>외부인 참가 조건</strong>: MEMO-04에서 "결정하지 않았다" → 미결정. 다른 문서에도 근거 없음 → 확인 필요.</li>
+    <li><strong>기념품 재원</strong>: 학교지원금은 기념품·개인선물 제외(APPROVAL-FUND-04 · RULE-01). 회비 기념품은 1인 3,000원 이내·결재·영수증 필요(CLUB-01 제2조) → 기념스티커(P04) 지출 요건 확인.</li>
+    <li><strong>인화비 용도 미기재분</strong>: 영수증·사용 목적 재확인 필요(MEMO-04).</li>
+    <li><strong>지원금 부족분</strong>: 전 시나리오에서 지원금 부족. 잔여 500,000원은 정산 승인 후 지급이라 현재 가용현금 아님(APPROVAL-FUND-04) → 부족분 재원 계획 필요.</li>
+  </ul>
+
+  <h2>판단 근거 문서</h2>
+  <ul>
+    <li><strong>MEMO-04</strong> 운영회의 메모 — 승인 정원 160명, 180명 미승인, 외부인 미결정.</li>
+    <li><strong>NOTICE-04</strong> 홍보 안내문 — 홍보 정원 180명(홍보용, 승인서 아님).</li>
+    <li><strong>APPROVAL-FUND-04</strong> 지원금 승인서 — 한도 1,500,000 / 1차 1,000,000(T091) / 잔여 500,000 미가용 / 기념품 제외.</li>
+    <li><strong>ACCOUNT-01</strong> 회계 집계 기준 — 기초잔액·부호·순지출·구매계획 산식.</li>
+    <li><strong>CLUB-01</strong> 운영 규칙 — 확정인원 기준, 대기자 미포함, 회비 기념품 한도.</li>
+  </ul>
+  <p class="note">데이터 출처: week04/data (참가신청 200행·회계내역 120행·구매계획 12행), 집계: submissions/aggregate_result.json. 원본 CSV는 수정하지 않음.</p>
+</body>
+</html>
