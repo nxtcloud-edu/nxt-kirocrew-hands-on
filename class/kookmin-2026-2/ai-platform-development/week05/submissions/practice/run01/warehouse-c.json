@@ -1,0 +1,24 @@
+{
+  "warehouse": "C",
+  "source_file": "warehouse-c.md",
+  "threshold": 5,
+  "low_stock_basis": "warehouse_row",
+  "total": 16,
+  "items": {
+    "sensor": 4,
+    "hub": 11,
+    "cable": 1
+  },
+  "low_stock": [
+    {
+      "warehouse": "C",
+      "item": "sensor",
+      "quantity": 4
+    },
+    {
+      "warehouse": "C",
+      "item": "cable",
+      "quantity": 1
+    }
+  ]
+}

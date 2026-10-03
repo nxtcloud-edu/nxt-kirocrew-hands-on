@@ -1,0 +1,9 @@
+{
+  "warehouse": "B",
+  "item_qty": {
+    "mug": 5,
+    "bottle": 9,
+    "hub": 2
+  },
+  "total": 16
+}

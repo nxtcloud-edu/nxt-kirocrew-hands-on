@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>실험 결과 보고서 작성기</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  /* ===== v2 디자인 시스템: 뷰 무관 고정 · 라이트 기준 ===== */
+  :root{
+    color-scheme:light;
+    --bg:210 20% 98%; --fg:222 24% 16%; --card:0 0% 100%; --card-2:210 20% 99%;
+    --muted:210 16% 95%; --muted-fg:215 16% 38%; --border:214 18% 88%;
+    --primary:222 47% 30%; --primary-fg:0 0% 100%; --accent:212 22% 93%;
+    --ring:222 47% 45%;
+    --pos:151 60% 26%; --pos-bg:151 55% 92%; --warn:22 84% 36%; --warn-bg:28 88% 92%;
+    --info:212 70% 40%; --info-bg:212 80% 94%;
+    --radius:16px; --radius-sm:10px;
+    --shadow-sm:0 1px 2px hsl(222 20% 18% / .05);
+    --shadow:0 1px 2px hsl(222 20% 18% / .05), 0 10px 28px hsl(222 20% 18% / .06);
+    --shadow-lg:0 2px 4px hsl(222 20% 18% / .06), 0 24px 48px hsl(222 20% 18% / .10);
+  }
+  html,body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,
+      system-ui,'Segoe UI','Malgun Gothic',sans-serif;
+    background:hsl(var(--bg)); color:hsl(var(--fg)); line-height:1.65;
+    letter-spacing:-.011em; font-variant-numeric:tabular-nums;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ===== 스티키 앱바 (화면 전용) ===== */
+  .toolbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+    padding:11px 18px; background:hsl(0 0% 100% / .82);
+    backdrop-filter:blur(12px) saturate(160%); border-bottom:1px solid hsl(var(--border));
+  }
+  .toolbar .brand{font-weight:700; margin-right:auto; letter-spacing:-.01em; color:hsl(var(--fg))}
+  .toolbar .brand small{color:hsl(var(--muted-fg)); font-weight:400; font-size:12px; margin-left:8px}
+  button.btn{
+    font:inherit; font-size:13px; font-weight:600; cursor:pointer;
+    border:1px solid hsl(var(--border)); background:hsl(var(--card)); color:hsl(var(--fg));
+    padding:8px 14px; border-radius:10px; transition:.18s cubic-bezier(.16,1,.3,1);
+  }
+  button.btn:hover{border-color:hsl(var(--ring)); box-shadow:var(--shadow-sm); transform:translateY(-1px)}
+  button.btn.primary{background:hsl(var(--primary)); border-color:hsl(var(--primary)); color:hsl(var(--primary-fg))}
+  button.btn.primary:hover{background:hsl(222 47% 24%)}
+  button.btn.ghost{background:transparent}
+  button.btn.danger{color:hsl(var(--warn))}
+  button.btn.danger:hover{border-color:hsl(var(--warn)); background:hsl(var(--warn-bg))}
+
+  /* ===== 페이지 / 시트 ===== */
+  .sheet{ max-width:920px; margin:26px auto 90px; }
+  .doc{}
+
+  /* ===== 결론 우선 히어로 ===== */
+  .hero{
+    position:relative; overflow:hidden;
+    background:linear-gradient(135deg, hsl(var(--primary)), hsl(222 44% 34%));
+    color:hsl(var(--primary-fg));
+    border-radius:var(--radius); padding:28px 32px 26px; margin:0 0 20px;
+    box-shadow:var(--shadow);
+  }
+  .hero::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(560px 180px at 88% -30%, hsl(0 0% 100% / .1), transparent 70%);
+  }
+  .hero h1.title{
+    position:relative; font-size:28px; font-weight:750; letter-spacing:-.02em;
+    text-align:left; margin:0 0 4px; color:hsl(var(--primary-fg));
+  }
+  .hero .subtitle{
+    position:relative; text-align:left; font-size:14px; margin:0 0 18px;
+    color:hsl(0 0% 100% / .82);
+  }
+  .kpis{
+    position:relative; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:12px;
+  }
+  .kpi{
+    background:hsl(0 0% 100% / .12); border:1px solid hsl(0 0% 100% / .18);
+    border-radius:var(--radius-sm); padding:11px 14px; backdrop-filter:blur(4px);
+  }
+  .kpi .kpi-k{font-size:11.5px; color:hsl(0 0% 100% / .78); font-weight:600; margin-bottom:3px}
+  .kpi .kpi-v{font-size:15px; font-weight:700; color:hsl(var(--primary-fg))}
+  .kpi .kpi-v[contenteditable]:hover{background:hsl(0 0% 100% / .12); border-radius:6px}
+
+  /* ===== 카드 ===== */
+  .meta{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:11px 20px;
+    padding:16px 20px; margin:0 0 22px; background:hsl(var(--card-2));
+    border:1px solid hsl(var(--border)); border-radius:var(--radius); font-size:14px;
+    box-shadow:var(--shadow-sm);
+  }
+  .meta .row{display:flex; align-items:baseline; gap:8px}
+  .meta .k{color:hsl(var(--muted-fg)); font-weight:600; white-space:nowrap; min-width:52px}
+  .meta .block{color:hsl(var(--fg))}
+
+  section{
+    background:hsl(var(--card)); border:1px solid hsl(var(--border));
+    border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:22px 26px; margin:0 0 18px;
+    animation:rise .5s cubic-bezier(.16,1,.3,1) both;
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+  section:hover{box-shadow:var(--shadow)}
+  h2.sec{
+    font-size:16px; font-weight:650; margin:0 0 12px; padding-bottom:9px;
+    border-bottom:1px solid hsl(var(--border)); display:flex; align-items:center; gap:9px;
+    color:hsl(var(--fg)); letter-spacing:-.01em;
+  }
+  h2.sec .num{
+    background:hsl(var(--primary)); color:hsl(var(--primary-fg)); font-size:13px; font-weight:700;
+    width:24px; height:24px; border-radius:7px; display:inline-flex;
+    align-items:center; justify-content:center; flex:0 0 auto;
+  }
+  h3.subh{font-size:14.5px; font-weight:650; margin:18px 0 6px; color:hsl(var(--primary))}
+  .hint{
+    font-size:12.5px; color:hsl(var(--muted-fg)); background:hsl(var(--info-bg));
+    border:1px solid hsl(var(--info) / .28);
+    border-radius:var(--radius-sm); padding:9px 12px; margin:6px 0 12px;
+  }
+
+  [contenteditable]{outline:none; border-radius:6px; transition:background .15s, box-shadow .15s}
+  [contenteditable]:hover{background:hsl(var(--muted))}
+  [contenteditable]:focus{background:hsl(var(--accent)); box-shadow:inset 0 0 0 1px hsl(var(--ring) / .5)}
+  [contenteditable].block{
+    min-height:1.6em; padding:7px 10px; margin:2px -10px; white-space:pre-wrap;
+    font-size:13.5px; color:hsl(var(--fg));
+  }
+  [contenteditable][data-empty]:empty:before{
+    content:attr(data-empty); color:hsl(var(--muted-fg) / .7); pointer-events:none;
+  }
+  ul.edit{margin:6px 0; padding-left:22px; color:hsl(var(--fg))}
+  ul.edit li{margin:4px 0; font-size:13.5px}
+  b{color:hsl(var(--fg))}
+  mark{
+    background:hsl(45 96% 82%); color:hsl(28 90% 22%); padding:0 3px; border-radius:4px;
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ===== 배지 pill (필수 키워드) ===== */
+  .kwbar{display:flex; flex-wrap:wrap; gap:8px; margin:4px 0 14px}
+  .kw{
+    font-size:12.5px; padding:5px 12px; border-radius:20px; font-weight:600;
+    border:1px solid hsl(var(--border)); background:hsl(var(--card)); color:hsl(var(--muted-fg));
+    user-select:none; transition:.18s;
+  }
+  .kw.on{background:hsl(var(--pos-bg)); border-color:hsl(var(--pos) / .4); color:hsl(var(--pos))}
+  .kw .mk{margin-right:5px}
+
+  /* ===== 사진 드롭존 ===== */
+  .photos{display:flex; flex-wrap:wrap; gap:12px; margin:10px 0}
+  .figure{
+    position:relative; width:262px; border:1px solid hsl(var(--border));
+    border-radius:var(--radius-sm); overflow:hidden; background:hsl(var(--card));
+    box-shadow:var(--shadow-sm);
+  }
+  .figure img{display:block; width:100%; height:auto}
+  .figure .cap{
+    font-size:12.5px; text-align:center; padding:8px; color:hsl(var(--muted-fg));
+    border-top:1px solid hsl(var(--border)); background:hsl(var(--card-2));
+  }
+  .figure .rm{
+    position:absolute; top:6px; right:6px; width:25px; height:25px; border-radius:50%;
+    background:hsl(222 24% 16% / .6); color:#fff; border:none; cursor:pointer; font-size:15px;
+    display:flex; align-items:center; justify-content:center; transition:.15s;
+  }
+  .figure .rm:hover{background:hsl(var(--warn))}
+  .dropzone{
+    width:262px; min-height:150px; border:2px dashed hsl(var(--ring) / .45);
+    background:hsl(var(--accent)); border-radius:var(--radius-sm);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+    cursor:pointer; color:hsl(var(--primary)); font-size:13px; font-weight:600;
+    text-align:center; padding:14px; transition:.18s cubic-bezier(.16,1,.3,1);
+  }
+  .dropzone:hover{border-color:hsl(var(--ring)); background:hsl(212 30% 90%)}
+  .dropzone.hot{border-color:hsl(var(--ring)); background:hsl(212 40% 86%); transform:scale(1.01)}
+  .dropzone .ico{font-size:30px; line-height:1}
+  .dropzone small{font-weight:400; color:hsl(var(--muted-fg))}
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:hsl(var(--fg)); color:hsl(var(--bg)); padding:11px 22px; border-radius:24px;
+    font-size:13.5px; opacity:0; pointer-events:none; transition:.25s; z-index:100;
+    box-shadow:var(--shadow-lg);
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+  /* ===== 모션 & 접근성 ===== */
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    section{animation:none}
+    section:hover{transform:none}
+    button.btn:hover{transform:none}
+    html{scroll-behavior:auto}
+  }
+  :focus-visible{ outline:2px solid hsl(var(--ring)); outline-offset:2px; border-radius:6px }
+
+  /* ===== 인쇄(PDF) ===== */
+  @media print{
+    @page{margin:15mm}
+    body{background:#fff}
+    .toolbar{position:static; display:none !important}
+    .dropzone,.figure .rm,.hint{display:none !important}
+    .sheet{margin:0; max-width:none}
+    .doc{padding:0}
+    .hero{box-shadow:none}
+    section{
+      break-inside:avoid; box-shadow:none; transform:none; animation:none;
+      border:1px solid hsl(var(--border));
+    }
+    .figure{break-inside:avoid; box-shadow:none}
+    [contenteditable]:hover,[contenteditable]:focus{background:none; box-shadow:none}
+    a{color:inherit; text-decoration:none}
+    .kw:not(.on){display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="brand">🧪 실험 결과 보고서 작성기 <small>편집하고 · 사진 넣고 · PDF로 저장</small></div>
+  <button class="btn" onclick="addFigureBlank()">＋ 사진칸 추가</button>
+  <button class="btn ghost" onclick="loadFile()">📂 불러오기</button>
+  <button class="btn ghost" onclick="saveFile()">💾 저장(.json)</button>
+  <button class="btn danger" onclick="newBlank()">🗑 새 보고서(빈 양식)</button>
+  <button class="btn primary" onclick="window.print()">🖨 PDF로 저장 / 인쇄</button>
+</div>
+
+<div class="sheet"><div class="doc" id="doc">
+
+  <!-- 결론 우선 히어로: 실험 핵심 정보 -->
+  <header class="hero">
+    <h1 class="title" contenteditable data-empty="실험 제목을 입력하세요">뉴턴의 프리즘 실험 결과 보고서</h1>
+    <p class="subtitle" contenteditable data-empty="과목 · 학기 · 주차">빛과 아인슈타인 (2026-2학기) · 3주차 실험</p>
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-k">이름</div><div class="kpi-v" contenteditable data-empty="___">　</div></div>
+      <div class="kpi"><div class="kpi-k">학번</div><div class="kpi-v" contenteditable data-empty="___">　</div></div>
+      <div class="kpi"><div class="kpi-k">조</div><div class="kpi-v" contenteditable data-empty="___">　</div></div>
+      <div class="kpi"><div class="kpi-k">제출일</div><div class="kpi-v" contenteditable data-empty="____-__-__">　</div></div>
+    </div>
+  </header>
+
+  <div class="meta">
+    <div class="row"><span class="k">학과</span><span class="block" contenteditable data-empty="전자공학부"></span></div>
+    <div class="row"><span class="k">담당교수</span><span class="block" contenteditable data-empty="___"></span></div>
+    <div class="row"><span class="k">실험일</span><span class="block" contenteditable data-empty="____-__-__"></span></div>
+  </div>
+
+  <!-- 1. 목적 -->
+  <section>
+    <h2 class="sec"><span class="num">1</span> 실험 목적</h2>
+    <ul class="edit" contenteditable>
+      <li>백색광이 프리즘을 통과할 때 다양한 파장(색)으로 분리되는 현상을 관찰한다.</li>
+      <li>서로 다른 파장의 빛이 서로 다른 각도로 굴절되는 원리를 이해한다.</li>
+      <li>두 개의 프리즘을 이용해 분산된 스펙트럼이 다시 백색광으로 합쳐질 수 있는지 확인한다.</li>
+    </ul>
+  </section>
+
+  <!-- 2. 핵심 용어 (필수 키워드) -->
+  <section>
+    <h2 class="sec"><span class="num">2</span> 핵심 용어 정리</h2>
+    <div class="hint">아래 필수 키워드가 본문에 들어가면 초록색으로 표시됩니다. (분산 · 굴절 · 스펙트럼 · 단색광)</div>
+    <div class="kwbar" id="kwbar"></div>
+    <ul class="edit" contenteditable>
+      <li><b>분산 (Dispersion):</b> 백색광이 프리즘과 같은 매질을 통과할 때 파장에 따라 굴절률이 달라져, 각 색의 빛이 서로 다른 각도로 꺾이며 갈라져 퍼지는 현상.</li>
+      <li><b>굴절 (Refraction):</b> 빛이 한 매질에서 다른 매질로 진행할 때 경계면에서 속도가 달라지며 진행 방향이 꺾이는 현상.</li>
+      <li><b>스펙트럼 (Spectrum):</b> 백색광이 파장별로 분산되어 나타나는 연속적인 색의 띠(빨강–주황–노랑–초록–파랑–남색–보라).</li>
+      <li><b>단색광 (Monochromatic light):</b> 하나의 파장(또는 매우 좁은 대역)으로만 이루어진 빛으로, 프리즘을 다시 통과시켜도 더 이상 다른 색으로 분산되지 않는다.</li>
+    </ul>
+  </section>
+
+  <!-- 3. 방법 -->
+  <section>
+    <h2 class="sec"><span class="num">3</span> 실험 방법 요약</h2>
+    <ul class="edit" contenteditable>
+      <li>광원과 슬릿을 정렬하여 좁고 곧은 빛줄기를 만든다.</li>
+      <li>첫 번째 프리즘을 빛의 경로에 놓고 회전시키며 스펙트럼이 가장 선명하게 퍼지는 지점을 찾는다.</li>
+      <li>백색광이 프리즘을 통과해 무지개색 스펙트럼으로 분산되는 모습을 관찰한다.</li>
+      <li>스펙트럼 중 한 가지 색(빨간색)만 슬릿으로 선택해 두 번째 프리즘에 통과시키고, 추가로 분산되는지 확인한다.</li>
+      <li>분산된 스펙트럼 전체를 거꾸로 놓은 두 번째 프리즘에 모아, 다시 백색광으로 합쳐지는지 확인한다.</li>
+    </ul>
+  </section>
+
+  <!-- 4. 결과 (사진 삽입 위치) -->
+  <section>
+    <h2 class="sec"><span class="num">4</span> 실험 결과</h2>
+    <div class="hint">아래 문장은 <b>예시 틀</b>입니다. 반드시 실제로 측정·관찰한 값(각도·폭·거리·사진)으로 바꿔 쓰세요. 예시를 그대로 제출하지 않습니다.</div>
+
+    <h3 class="subh">4.1 백색광의 분산 (1단계 프리즘)</h3>
+    <div class="block" contenteditable data-empty="관찰 내용을 입력하세요">백색광이 프리즘을 통과하자 스크린 위에 빨강–주황–노랑–초록–파랑–남색–보라 순서의 스펙트럼이 나타났다. 프리즘을 회전시키며 스펙트럼이 가장 선명한 각도를 찾았고, 보라색이 빨간색보다 크게 굴절되었다. (측정값 → 스펙트럼 폭 ___ cm, 프리즘–스크린 거리 ___ cm, 대략적 굴절각 ___)</div>
+    <div class="photos" data-zone="4.1"></div>
+
+    <h3 class="subh">4.2 단색광의 재굴절 (2단계 프리즘)</h3>
+    <div class="block" contenteditable data-empty="관찰 내용을 입력하세요">1차 스펙트럼에서 빨간색만 슬릿으로 분리해 두 번째 프리즘에 통과시켰다. 빨간빛은 굴절각만 다시 바뀌었을 뿐 다른 색으로 갈라지지 않고 그대로 유지되었다. (관찰 → 색 유지 여부 ___, 예상과 다른 점 ___)</div>
+    <div class="photos" data-zone="4.2"></div>
+
+    <h3 class="subh">4.3 빛의 재조합 (백색광 복원)</h3>
+    <div class="block" contenteditable data-empty="관찰 내용을 입력하세요">분산된 스펙트럼을 거꾸로 놓은 두 번째 프리즘에 모으자 스크린 위에 다시 밝은 빛줄기가 나타났다. 고르게 입사할 때는 백색광에 가깝게 복원되었고, 일부 색이 벗어나면 옅은 색 테두리가 남았다. (관찰 → 복원 정도 ___, 남은 색 테두리 ___)</div>
+    <div class="photos" data-zone="4.3"></div>
+  </section>
+
+  <!-- 5. 논의 -->
+  <section>
+    <h2 class="sec"><span class="num">5</span> 결과 논의</h2>
+
+    <h3 class="subh">(1) 프리즘이 색을 만들어내는 것인가요? 그 이유는?</h3>
+    <div class="block" contenteditable>아니다. 프리즘은 색을 새로 만들어내는 것이 아니라, 백색광 속에 원래 섞여 있던 여러 파장의 빛을 파장별로 다른 각도로 굴절시켜 "분리해서 보여주는" 역할을 한다. 이미 빨간색으로 분리된 빛을 두 번째 프리즘에 통과시켜도 새로운 색이 나타나지 않았는데, 이는 빨간빛이 이미 (거의) 단색광이라 더 이상 분해될 색이 없기 때문이다. 유리는 파장이 짧을수록(보라) 굴절률이 크고 길수록(빨강) 작은 분산 성질을 가져, 각 파장이 다른 각도로 꺾이며 스펙트럼이 나타난다.</div>
+
+    <h3 class="subh">(2) 백색광의 구성에 대한 이해가 어떻게 바뀌었나요?</h3>
+    <div class="block" contenteditable>실험 전에는 백색광을 단순히 "색이 없는 밝은 빛"으로 생각했지만, 이번 실험으로 백색광이 빨강부터 보라까지 다양한 파장의 빛이 섞인 혼합광임을 직접 확인했다. 특히 분산된 스펙트럼을 두 번째 프리즘으로 다시 모아 백색광이 복원되는 모습에서, 색이 프리즘이 만든 것이 아니라 빛 자체에 내재된 성질임을 알 수 있었다.</div>
+
+    <h3 class="subh">(3) 스펙트럼을 다시 백색광으로 합성하는 실험에서 어려웠던 점은?</h3>
+    <div class="hint">실제 경험한 어려움으로 바꿔 쓰세요. (아래는 예시)</div>
+    <div class="block" contenteditable>두 번째 프리즘의 각도·위치를 정확히 맞추기가 까다로웠다. 스펙트럼 전체를 고르게 입사시키기 어려워 일부 색만 들어가면 특정 색이 도는 빛이 나타났고, 주변 조명이 밝으면 상이 흐릿해져 판별이 어려웠다.</div>
+
+    <h3 class="subh">(4) 실생활에서 이 원리가 응용되는 예 두 가지</h3>
+    <ul class="edit" contenteditable>
+      <li><b>무지개:</b> 공기 중 물방울이 자연적인 프리즘 역할을 하여 햇빛을 파장별로 분산시켜 우리 눈에 무지개로 보인다.</li>
+      <li><b>분광학(spectroscopy):</b> 프리즘·회절격자로 빛을 분산시켜 스펙트럼을 분석하면 별빛의 성분(천문학)이나 물질의 화학 성분을 알아낼 수 있다.</li>
+    </ul>
+  </section>
+
+  <!-- 6. 결론 -->
+  <section>
+    <h2 class="sec"><span class="num">6</span> 결론</h2>
+    <div class="block" contenteditable>이번 실험을 통해 백색광이 여러 파장의 빛이 섞인 혼합광이며, 프리즘은 파장에 따라 빛을 다른 각도로 굴절시켜 분산시킬 뿐 색을 새로 만들지 않음을 확인했다. 또한 분산된 스펙트럼을 두 번째 프리즘으로 다시 모으면 백색광으로 복원되어, 빛의 색 분리가 가역적인 물리 현상임을 알 수 있었다. 이는 뉴턴이 증명한 빛의 본질과 일치하며, 무지개·분광학 등 다양한 실생활 응용의 기초가 된다.</div>
+  </section>
+
+  <!-- 7. 참고자료 -->
+  <section>
+    <h2 class="sec"><span class="num">7</span> 참고자료</h2>
+    <div class="hint">매주 주제가 바뀌면 이 자리는 Kiro에게 "이번 주제 출처 채워줘"라고 요청하세요. 주제에 맞는 신뢰할 자료 2~3개로 채워 드립니다. (아래는 이번 프리즘 실험용 예시)</div>
+    <ol class="edit" contenteditable style="margin:6px 0;padding-left:22px;font-size:13.5px;color:hsl(var(--fg))">
+      <li>실험 지도교수 강의자료, 「빛과 아인슈타인」 3주차 실험 안내, 국민대학교, 2026.</li>
+      <li>Hecht, E., <i>Optics</i>, 5th ed., Pearson — 분산·굴절 관련 장.</li>
+    </ol>
+  </section>
+
+</div></div>
+
+<div class="toast" id="toast"></div>
+<input type="file" id="filepick" accept="application/json" style="display:none">
+
+<script>
+/* ---------- keyword highlighter ---------- */
+const KEYWORDS = ["분산","굴절","스펙트럼","단색광"];
+function refreshKeywords(){
+  const text = document.getElementById('doc').innerText;
+  const bar = document.getElementById('kwbar');
+  bar.innerHTML = "";
+  KEYWORDS.forEach(k=>{
+    const hit = text.includes(k);
+    const el = document.createElement('span');
+    el.className = 'kw' + (hit ? ' on':'');
+    el.innerHTML = '<span class="mk">'+(hit?'✓':'○')+'</span>'+k;
+    bar.appendChild(el);
+  });
+}
+
+/* ---------- photo drop zones ---------- */
+function makeDropzone(zone){
+  const dz = document.createElement('label');
+  dz.className = 'dropzone';
+  dz.innerHTML = '<span class="ico">📷</span>사진을 여기에 끌어다 놓기<small>또는 클릭해서 선택 · 여러 장 가능</small>'
+    + '<input type="file" accept="image/*" multiple style="display:none">';
+  const input = dz.querySelector('input');
+  input.addEventListener('change', e=>{ handleFiles(e.target.files, zone); input.value=''; });
+  ['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('hot');}));
+  ['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('hot');}));
+  dz.addEventListener('drop', e=>{ handleFiles(e.dataTransfer.files, zone); });
+  return dz;
+}
+function ensureDropzone(container){
+  if(!container.querySelector('.dropzone')) container.appendChild(makeDropzone(container));
+}
+function addFigure(container, dataUrl, caption){
+  const fig = document.createElement('figure');
+  fig.className = 'figure';
+  fig.innerHTML = '<button class="rm" title="삭제">×</button>'
+    + '<img src="'+dataUrl+'">'
+    + '<figcaption class="cap" contenteditable data-empty="그림 설명 입력">'+(caption||'그림 설명 입력')+'</figcaption>';
+  fig.querySelector('.rm').addEventListener('click', ()=>{ fig.remove(); });
+  const dz = container.querySelector('.dropzone');
+  container.insertBefore(fig, dz || null);
+}
+function handleFiles(files, container){
+  [...files].filter(f=>f.type.startsWith('image/')).forEach(f=>{
+    const r = new FileReader();
+    r.onload = ()=> addFigure(container, r.result);
+    r.readAsDataURL(f);
+  });
+  ensureDropzone(container);
+  toast('사진을 추가했습니다');
+}
+function addFigureBlank(){
+  // add an extra empty photo zone at 4.3 (or first zone) by appending a fresh block
+  const zones = document.querySelectorAll('.photos');
+  const target = zones[zones.length-1];
+  if(target){ const dz = makeDropzone(target); target.appendChild(dz); toast('사진칸을 추가했습니다'); }
+}
+
+/* ---------- save / load (JSON incl. images) ---------- */
+function saveFile(){
+  const data = { html: document.getElementById('doc').innerHTML, savedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data)], {type:'application/json'});
+  const a = document.createElement('a');
+  const title = (document.querySelector('h1.title').innerText||'실험보고서').trim().replace(/\s+/g,'_');
+  a.href = URL.createObjectURL(blob);
+  a.download = title + '.json';
+  a.click();
+  toast('저장했습니다 (사진 포함)');
+}
+function loadFile(){ document.getElementById('filepick').click(); }
+document.getElementById('filepick').addEventListener('change', e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      const d = JSON.parse(r.result);
+      if(d.html){ document.getElementById('doc').innerHTML = d.html; wireUp(); toast('불러왔습니다'); }
+    }catch(err){ toast('파일을 읽을 수 없습니다'); }
+  };
+  r.readAsText(f);
+  e.target.value='';
+});
+
+/* ---------- new blank report ---------- */
+function newBlank(){
+  if(!confirm('빈 양식으로 새 보고서를 시작할까요? 현재 내용은 사라집니다. (먼저 저장을 권장)')) return;
+  document.querySelector('h1.title').innerText='';
+  document.querySelector('.subtitle').innerText='';
+  document.querySelectorAll('.hero .kpi-v').forEach(b=>b.innerText='');
+  document.querySelectorAll('.meta .block').forEach(b=>b.innerText='');
+  // section 1
+  setList(0,['','','']);
+  // section 2 keywords list -> keep labels, clear defs? clear whole
+  document.querySelectorAll('section')[1].querySelector('ul.edit').innerHTML =
+    '<li><b>분산 (Dispersion):</b> </li><li><b>굴절 (Refraction):</b> </li><li><b>스펙트럼 (Spectrum):</b> </li><li><b>단색광 (Monochromatic light):</b> </li>';
+  setList(2,['','','']);
+  document.querySelectorAll('.block[contenteditable]').forEach(b=>{ if(!b.closest('.meta')) b.innerText=''; });
+  document.querySelectorAll('.photos').forEach(z=>{ z.innerHTML=''; ensureDropzone(z); });
+  document.querySelectorAll('section')[4].querySelectorAll('.subh').forEach(()=>{});
+  wireUp();
+  toast('빈 양식으로 시작합니다');
+}
+function setList(sectionIdx, items){
+  const ul = document.querySelectorAll('section')[sectionIdx].querySelector('ul.edit');
+  if(ul) ul.innerHTML = items.map(t=>'<li>'+t+'</li>').join('');
+}
+
+/* ---------- toast ---------- */
+let toastT;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+/* ---------- wire everything ---------- */
+function wireUp(){
+  document.querySelectorAll('.photos').forEach(z=>{
+    // re-bind remove buttons & dropzones after load
+    z.querySelectorAll('.figure .rm').forEach(btn=>{
+      btn.onclick = ()=> btn.closest('.figure').remove();
+    });
+    // rebuild dropzone (event handlers are lost after innerHTML load)
+    const old = z.querySelector('.dropzone'); if(old) old.remove();
+    ensureDropzone(z);
+  });
+  refreshKeywords();
+}
+document.addEventListener('input', ()=>refreshKeywords());
+window.addEventListener('DOMContentLoaded', wireUp);
+</script>
+</body>
+</html>
